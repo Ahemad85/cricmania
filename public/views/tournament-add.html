@@ -1,0 +1,89 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form role="form" id="add-tournament-form">
+		<div class="row">
+			<fieldset>
+				<legend>Tournament Information</legend>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="name" class="required">Tournament name</label>
+						<input id="name" name="name" class="form-control" ng-model="tournament.name"/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="organizedBy" class="required">Organized By</label>
+						<input id="organizedBy" name="organizedBy" class="form-control" ng-model="tournament.organizedBy"/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="startDate" class="required">Start date</label>
+						<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="tournament.startDate" is-open="status.opened" show-weeks="false" show-button-bar="false" min-date="minDate" ng-click="open($event)" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="password" class="required">Password</label>
+						<input id="password" type="password" name="password" class="form-control" ng-model="tournament.password"/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="cpassword" class="required">Password</label>
+						<input id="cpassword" type="password" name="cpassword" class="form-control" ng-model="tournament.cpassword"/>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Address Information</legend>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="country">Country</label>
+						<select id="country" name="country" class="form-control" ng-change="getStates(tournament.country)" ng-model="tournament.country">
+							<option ng-repeat="c in countries" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="state">State</label>
+						<select id="state" name="state" class="form-control" ng-change="getCities(tournament.state)" ng-model="tournament.state">
+							<option ng-repeat="s in states" value="{{s.value}}">{{s.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="city">City</label>
+						<select id="city" name="city" class="form-control" ng-model="tournament.city" ng-change="getGrounds(tournament.city)" >
+							<option ng-repeat="c in cities" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="ground">Ground</label>
+						<select id="ground" name="ground" class="form-control" ng-model="tournament.ground">
+							<option ng-repeat="g in grounds" value="{{g.value}}">{{g.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="zipcode">Zip code</label>
+						<input id="zipcode" name="zipcode" class="form-control" ng-model="tournament.zipcode"/>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="form-group">
+					<input type="button" value="Submit" class="form-control btn btn-primary" ng-click="saveEntity()"/>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+		</div>		
+	</form>
+</div>

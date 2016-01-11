@@ -1,0 +1,54 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form role="form" id="add-ground-form">
+		<div class="row">
+			<fieldset>
+				<legend>Ground Information</legend>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="name" class="required">Ground name</label>
+						<input id="name" name="name" class="form-control" ng-model="ground.name"/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="country" class="required">Country</label>
+						<select id="country" name="country" class="form-control" ng-change="getStates(ground.country)" ng-model="ground.country">
+							<option ng-repeat="c in countries" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="state" class="required">State</label>
+						<select id="state" name="state" class="form-control" ng-change="getCities(ground.state)" ng-model="ground.state">
+							<option ng-repeat="s in states" value="{{s.value}}">{{s.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="city" class="required">City</label>
+						<select id="city" name="city" class="form-control" ng-model="ground.city" >
+							<option ng-repeat="c in cities" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="zipcode" class="required">Zip code</label>
+						<input id="zipcode" name="zipcode" class="form-control" ng-model="ground.zipcode"/>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="form-group">
+					<input type="button" value="Submit" class="form-control btn btn-primary" ng-click="saveEntity()"/>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+		</div>
+	</form>
+</div>

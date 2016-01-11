@@ -1,0 +1,38 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="row">
+		<table class="table">
+			<tbody>
+				<tr>
+					<td>Tournament name</td>
+					<td>{{tournament.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<fieldset>
+			<legend>Teams</legend>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Sr No</th>
+						<th>Team name</th>
+						<th>From</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="team in tournament.teamVMs">
+						<td>{{$index+1}})</td>
+						<td><input type="text" crictypeahead url="/team-search" class="form-control" ng-model="team.id" ng-if="team.isNew"/><span ng-if="!team.isNew">{{team.name}}</span></td>
+						<td>{{team.city}}<span ng-if="team.state"> (</span>{{team.state}}<span ng-if="team.state">)</span></td>
+						<td><button class="btn btn-default" ng-if="team.isNew" ng-click="addTeamToTournament($index)">Add</button><button class="btn btn-warning" ng-click="removeTeam($index)">Remove</button></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="4"><button class="btn btn-default pull-right" ng-click="addMoreTeam()">Add more team</button></td>
+					</tr>
+				</tfoot>
+			</table>
+		</fieldset>
+	</div>
+</div>

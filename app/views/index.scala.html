@@ -1,7 +1,64 @@
-@(message: String)
-
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
-}
+<html>
+<head>
+	<title>CricMania</title>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+</head>
+<body ng-app="cricmania" ng-controller="MainController">
+	<div class="container">
+		<div class="row">
+		<h2 class="center">CricMania</h2>
+		</div>
+		<div class="row">
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				<ul class="nav nav-pills" role="tablist">
+					<li class="active"><a href="#/">Home</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Registration<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#add-player1">Player</a></li>
+							<li><a href="#add-umpire">Umpire</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Search<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#/find-player">Player</a></li>
+							<li><a href="#/find-umpire">Umpire</a></li>
+						</ul>
+					</li>					
+				</ul>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+		</div>
+		<div class="row" id="top-ad"></div>
+		<div class="row content">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-view></div>
+		</div>
+		<div class="row" id="bottom-ad"></div>
+		<div class="row footer center">Copyrights reserved.</div>
+	</div>
+	<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/angular.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/angular-route.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/moment.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/angular-animate.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/ui-bootstrap-tpls.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("custom-js/app1.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("custom-js/services.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("custom-js/controllers.js")" type="text/javascript"></script>
+	<script>
+		$(function() {
+			$(".container").css("min-height",$(window).height());
+			$(window).resize(function() {
+				console.log($(window).height());
+				$(".container").css("min-height",$(window).height());
+			});
+		});
+		
+	</script>
+</body>
+</html>

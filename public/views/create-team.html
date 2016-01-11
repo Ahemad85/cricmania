@@ -1,0 +1,201 @@
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+	<form role="form" id="add-player-form">
+		<div class="row">
+			<fieldset>
+				<legend>Team Information</legend>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="name" class="required">Team name</label>
+						<input id="name" name="name" class="form-control" ng-model="team.name" placeholder="Team name.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="sponsor">Team sponsor</label>
+						<input id="sponsor" name="sponsor" class="form-control" ng-model="team.sponsor" placeholder="Team sponsor.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="contactPerson" class="required">Contact person name</label>
+						<input id="contactPerson" name="contactPerson" class="form-control" ng-model="team.contactPerson" placeholder="Contact person.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="contactNumber" class="required">Contact number</label>
+						<input id="contactNumber" name="contactNumber" class="form-control" ng-model="team.contactNumber"  placeholder="Contact number.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="email" class="required">Email</label>
+						<input id="email" name="email" type="email" class="form-control" ng-model="team.email" placeholder="email.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="teamLogo">Team Logo</label>
+						<input id="teamLogo" type="file" name="teamLogo" class="form-control" style="display: block;" ngf-accept="image/*" ngf-pattern=".png,.jpg,.jpeg" ngf-select="selectFile($file)"/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="password" class="required">Password</label>
+						<input id="password" name="password" type="password" class="form-control" ng-model="team.password"  placeholder="Password.."/>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="cpassword" class="required">Confirm Password</label>
+						<input id="cpassword" name="cpassword" type="password" class="form-control" ng-model="team.cpassword"  placeholder="Password.."/>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Address Information</legend>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="country">Country</label>
+						<select id="country" name="country" class="form-control" ng-change="getStates(team.country)" ng-model="team.country">
+							<option ng-repeat="c in countries" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="state">State</label>
+						<select id="state" name="state" class="form-control" ng-change="getCities(team.state)" ng-model="team.state">
+							<option ng-repeat="s in states" value="{{s.value}}">{{s.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="city">City</label>
+						<select id="city" name="city" class="form-control" ng-model="team.city">
+							<option ng-repeat="c in cities" value="{{c.value}}">{{c.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div class="form-group">
+						<label for="zipcode">Zipcode</label>
+						<input id="zipcode" name="zipcode" class="form-control" ng-model="team.zipcode"/>
+					</div>
+				</div>
+			</fieldset>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Sr No</th>
+						<th>Player Id</th>
+						<th>Is captain</th>
+						<th>Is vice captain</th>
+						<th>Is Batsman</th>
+						<th>Is Bowler</th>
+						<th>Is Keeper</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="p in team.players">
+						<td>{{$index+1}})</td>
+						<td><input type="text" class="form-control" ng-model="p.player" placeholder="Player id.."/></td>
+						<td>
+							<input id="captain{{$index}}" type="radio" ng-checked="p.isCaptain" ng-class="p.isCaptain ? 'checked' : ''" ng-model="p.isCaptain" name="captain" ng-change="changeCaptain($index)"/>
+							<label for="captain{{$index}}"></label>
+						</td>
+						<td>
+							<input type="radio" id="viceCaptain{{index}}" name="viceCaptain" ng-model="p.isViceCaptain" ng-class="p.isViceCaptain ? 'checked' : ''" ng-change="changeViceCaptain($index)"/>
+							<label for="viceCaptain{{$index}}"></label>
+						</td>
+						<td>
+							<input id="batsman{{$index}}" type="checkbox" ng-model="p.isBatsman" ng-class="p.isBatsman ? 'checked' : ''"/>
+							<label for="batsman{{$index}}"></label>
+						</td>
+						<td>
+							<input id="bowler{{$index}}" type="checkbox" ng-model="p.isBowler" ng-class="p.isBowler ? 'checked' : ''"/>
+							<label for="bowler{{$index}}"></label>
+						</td>
+						<td>
+							<input id="keeper{{$index}}" type="radio" name="keeper" ng-model="p.isKeeper" ng-class="p.isKeeper ? 'checked' : ''" ng-change="changeKeeper($index)"/>
+							<label for="keeper{{$index}}"></label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="7">
+							<button class="btn btn-default pull-right" ng-click="addMorePlayer()" ng-if="team.players.length < 15">Add More Player</button>
+							<button class="btn btn-warning pull-right" ng-click="removeLastPlayer()" ng-if="team.players.length > 11">Remove Player</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="form-group">
+					<input type="button" value="Submit" class="form-control btn btn-primary" ng-click="saveEntity()"/>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-4 col-lg-4"></div>
+		</div>
+	</form>
+</div>
+<style>
+
+table label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+table input[type=radio],
+table input[type=checkbox] {
+	display: none;
+}
+table label:before {
+	content: "";
+	display: inline-block;
+
+	width: 16px;
+	height: 16px;
+
+	margin-right: 10px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	background-color: #aaa;
+	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+	top: 1px;
+}
+
+table .radio label:before {
+	border-radius: 8px;
+}
+table .checkbox label {
+	margin-bottom: 10px;
+}
+table .checkbox label:before {
+    border-radius: 3px;
+}
+
+table input[type=radio].checked + label:before {
+    content: "\2022";
+    color: #f3f3f3;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+}
+
+table input[type=checkbox].checked + label:before {
+	content: "\2713";
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font-size: 15px;
+	color: #f3f3f3;
+	text-align: center;
+    line-height: 15px;
+}
+</style>
