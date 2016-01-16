@@ -89,7 +89,7 @@
 				<thead>
 					<tr>
 						<th>Sr No</th>
-						<th>Player Id</th>
+						<th>Player name</th>
 						<th>Is captain</th>
 						<th>Is vice captain</th>
 						<th>Is Batsman</th>
@@ -100,24 +100,24 @@
 				<tbody>
 					<tr ng-repeat="p in team.players">
 						<td>{{$index+1}})</td>
-						<td><input type="text" class="form-control" ng-model="p.player" placeholder="Player id.."/></td>
-						<td>
+						<td><input type="text" class="form-control" crictypeahead url="/player-search" ng-model="p.player" placeholder="Player name.."/></td>
+						<td class="center">
 							<input id="captain{{$index}}" type="radio" ng-checked="p.isCaptain" ng-class="p.isCaptain ? 'checked' : ''" ng-model="p.isCaptain" name="captain" ng-change="changeCaptain($index)"/>
 							<label for="captain{{$index}}"></label>
 						</td>
-						<td>
+						<td class="center">
 							<input type="radio" id="viceCaptain{{index}}" name="viceCaptain" ng-model="p.isViceCaptain" ng-class="p.isViceCaptain ? 'checked' : ''" ng-change="changeViceCaptain($index)"/>
 							<label for="viceCaptain{{$index}}"></label>
 						</td>
-						<td>
+						<td class="center">
 							<input id="batsman{{$index}}" type="checkbox" ng-model="p.isBatsman" ng-class="p.isBatsman ? 'checked' : ''"/>
 							<label for="batsman{{$index}}"></label>
 						</td>
-						<td>
+						<td class="center">
 							<input id="bowler{{$index}}" type="checkbox" ng-model="p.isBowler" ng-class="p.isBowler ? 'checked' : ''"/>
 							<label for="bowler{{$index}}"></label>
 						</td>
-						<td>
+						<td class="center">
 							<input id="keeper{{$index}}" type="radio" name="keeper" ng-model="p.isKeeper" ng-class="p.isKeeper ? 'checked' : ''" ng-change="changeKeeper($index)"/>
 							<label for="keeper{{$index}}"></label>
 						</td>

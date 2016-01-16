@@ -12,7 +12,7 @@ public class Tournament extends Modifiable {
 	private Address address;
 	private String name;
 	private String organizedBy;
-	private List<String> teams;
+	private List<TournamentTeam> teams;
 	private Date startDate;
 	private TournamentStatus tournamentStatus = TournamentStatus.YET_TO_START;
 	
@@ -30,10 +30,10 @@ public class Tournament extends Modifiable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<String> getTeams() {
+	public List<TournamentTeam> getTeams() {
 		return teams;
 	}
-	public void setTeams(List<String> teams) {
+	public void setTeams(List<TournamentTeam> teams) {
 		this.teams = teams;
 	}
 	public Date getStartDate() {

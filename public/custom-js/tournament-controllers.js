@@ -467,7 +467,14 @@ app.controller('RegisterTeamController',function($scope,$http,notificationServic
 					history : false
 				}
 			}).get().on('pnotify.confirm', function() {
-				console.log("removing..");
+				$http.post('/remove-team-from-tournament',{teamId:$scope.tournament.teamVMs[index].id}).success(function(data) {
+					if(data == 'ok') {
+						$scope.tournament.teamVMs.splice(index,1);
+						notificationService.success("Team removed.");
+					} else {
+						
+					}
+				});
 			}).on('pnotify.cancel',function() {
 				console.log("ok no problem");
 			});

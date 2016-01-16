@@ -108,7 +108,7 @@ app.directive('crictypeahead',function($http,$compile) {
 		link: function(scope,element,attr) {
 			if(attr.url) {
 				element.parent().css('position','relative');
-				var typeAheadContainer = $("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' style='background:white;display:none;position:absolute;cursor:pointer;'><div ng-repeat='item in items' ng-click='selectItem(item)'>{{item.name}}</div></div>");
+				var typeAheadContainer = $("<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' style='background:white;display:none;position:absolute;cursor:pointer;padding:0;z-index:10;max-height:100px;over-flow:auto;'><div ng-repeat='item in items' style='padding-left:10px;' ng-click='selectItem(item)'>{{item.name}}</div></div>");
 				typeAheadContainer.insertAfter(element);
 				var cloneElement = $(element[0].outerHTML);
 				element.hide();
@@ -119,8 +119,21 @@ app.directive('crictypeahead',function($http,$compile) {
 					element.trigger('change');
 					typeAheadContainer.hide();
 				};
+				typeAheadContainer.on('click',function() {
+					console.log("click");
+				});
 				$compile(typeAheadContainer)(scope);
 				var lastLength = 0;
+				cloneElement.on('focus',function() {
+					if(cloneElement.val().length>3) {
+						typeAheadContainer.width(cloneElement.outerWidth());
+						typeAheadContainer.show();
+					}
+				});
+				cloneElement.on('focusout',function(e) {
+					console.log("focusout");
+					//typeAheadContainer.hide();
+				});
 				cloneElement.on('keyup',function(e) {
 					element.val(cloneElement.val());
 					element.trigger('change');
@@ -128,11 +141,14 @@ app.directive('crictypeahead',function($http,$compile) {
 						$http.get(attr.url,{params:{q:cloneElement.val()}}).success(function(data) {
 							if(data && data.length>0) {
 								scope.items = data;
+								typeAheadContainer.width(cloneElement.outerWidth());
 								typeAheadContainer.show();
 							} else {
 								typeAheadContainer.hide();
 							}
 						});
+					} else if(cloneElement.val().length <= 3) {
+						typeAheadContainer.hide();
 					}
 					lastLength = cloneElement.val().length;
 				});

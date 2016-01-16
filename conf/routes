@@ -17,6 +17,7 @@ GET		/logout								controllers.Application.logout()
 GET		/tournament							controllers.Application.tournament()
 GET		/logged-in-tournament-detail		controllers.Application.loggedInTournament()
 GET		/team-search						controllers.Application.searchTeam()
+GET		/player-search						controllers.Application.playerSearch()
 
 POST	/save-player					 	controllers.Application.savePlayer()
 POST	/find-player						controllers.Application.findPlayer()
@@ -27,6 +28,7 @@ POST	/save-team							controllers.Application.saveTeam()
 POST	/upload-team-logo					controllers.Application.uploadTeamLogo()
 POST	/save-ground						controllers.Application.saveGround()
 POST	/add-team-to-tournament				controllers.Application.addTeamToTournament()
+POST	/remove-team-from-tournament		controllers.Application.removeTeamFromTournam()
 
 POST	/login-entity						controllers.Application.loginEntity()
 

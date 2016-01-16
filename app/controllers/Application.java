@@ -29,6 +29,7 @@ import com.cricmania.models.Player;
 import com.cricmania.models.Team;
 import com.cricmania.models.Tournament;
 import com.cricmania.models.Tournament.TournamentStatus;
+import com.cricmania.models.TournamentTeam;
 import com.cricmania.models.Umpire;
 import com.cricmania.comman.PlayerType;
 import com.cricmania.models.State;
@@ -129,6 +130,7 @@ public class Application extends Controller {
     
     public static Result savePlayer() {
     	JsonNode object = request().body().asJson();
+    	PlayerVM playerVM1 = request().body().as(PlayerVM.class);
     	PlayerVM playerVM = Mapper.mapJsonNodeToPlayerVM(object);
     	Player player = Mapper.mapPlayerVMToPlayer(playerVM);
     	player.save();
@@ -357,9 +359,10 @@ public class Application extends Controller {
     			if(tournamentVM != null) {
     				tournamentVM.setTeamVMs(new ArrayList<TeamVM>());
     				if(tournament.getTeams() != null) {
-    					for(String teamId : tournament.getTeams()) {
-    						Team team = Team.findById(teamId);
+    					for(TournamentTeam tournamentTeam : tournament.getTeams()) {
+    						Team team = Team.findById(tournamentTeam.getTeamId());
     						TeamVM teamVM = new TeamVM();
+    						teamVM.setId(team.getId());
     						teamVM.setContactPerson(team.getContactNumber());
     						teamVM.setContactPerson(team.getContactPerson());
     						teamVM.setEmail(team.getEmail());
@@ -433,19 +436,24 @@ public class Application extends Controller {
         			Tournament tournament = Tournament.getTournamentByUsername(arr[0]);
         			if(tournament != null) {
         				if(tournament.getTeams() == null) {
-        					List<String> teams = new ArrayList<String>();
-        					teams.add(teamId);
+        					List<TournamentTeam> teams = new ArrayList<TournamentTeam>();
+        					TournamentTeam tournamentTeam = new TournamentTeam();
+        					tournamentTeam.setTeamId(teamId);
+        					teams.add(tournamentTeam);
         					tournament.setTeams(teams);
         				} else {
-        					for(String team : tournament.getTeams()) {
-        						if(team.equals(teamId)) {
+        					for(TournamentTeam team : tournament.getTeams()) {
+        						if(team.getTeamId().equals(teamId)) {
         							return ok(Json.toJson("team already present"));
         						}
         					}
-        					tournament.getTeams().add(teamId);
+        					TournamentTeam tournamentTeam = new TournamentTeam();
+        					tournamentTeam.setTeamId(teamId);
+        					tournament.getTeams().add(tournamentTeam);
         				}
         				tournament.update();
         				TeamVM teamVM = new TeamVM();
+        				teamVM.setId(teamEntity.getId());
 						teamVM.setContactPerson(teamEntity.getContactNumber());
 						teamVM.setContactPerson(teamEntity.getContactPerson());
 						teamVM.setEmail(teamEntity.getEmail());
@@ -482,13 +490,53 @@ public class Application extends Controller {
     }
     
     public static Result searchTeam() {
-    	System.out.println(request().getQueryString("q"));
     	List<Team> teams = Team.getTeamByQuery(request().getQueryString("q"));
     	List<SelectItem> results = new ArrayList<SelectItem>(teams.size());
     	for(Team team : teams) {
     		SelectItem item = new SelectItem();
-    		item.setName(team.getName()+" ("+team.getId()+")");
+    		item.setName(team.getName()+" ["+team.getId()+"]");
     		item.setValue(team.getId());
+    		results.add(item);
+    	}
+    	return ok(Json.toJson(results));
+    }
+    
+    public static Result removeTeamFromTournam() {
+    	JsonNode node = request().body().asJson();
+    	String teamId = node.get("teamId") != null ? node.get("teamId").asText() : null;
+    	String uuid = session().get("uuid");
+    	if(uuid == null) {
+    		return ok(Json.toJson("not authenticated"));
+    	}
+    	if(teamId != null) {
+    		try {
+    			String[] arr = Crypto.decryptAES(uuid).split("-");
+        		if(arr.length == 2) {
+        			Tournament tournament = Tournament.getTournamentByUsername(arr[0]);
+        			if(tournament != null) {
+        				if(tournament.getTeams() == null) {
+        					return ok(Json.toJson("teams not found"));
+        				} else {
+        					if(tournament.getTeams().remove(teamId)) {
+        						tournament.update();
+        						return ok(Json.toJson("ok"));
+        					}
+        				}
+        			}
+        		}
+    		} catch(Exception e) {
+    		}
+    	} 
+    	return ok(Json.toJson("no change"));
+    }
+    
+    public static Result playerSearch() {
+    	List<Player> players = Player.getPlayerByQuery(request().getQueryString("q"));
+    	List<SelectItem> results = new ArrayList<SelectItem>(players.size());
+    	for(Player player : players) {
+    		SelectItem item = new SelectItem();
+    		item.setName(player.getFirstName() +"  "+player.getLastName() +" ["+player.getId()+"]");
+    		item.setValue(player.getId());
     		results.add(item);
     	}
     	return ok(Json.toJson(results));

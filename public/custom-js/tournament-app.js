@@ -28,9 +28,9 @@ var app = angular.module('cricmania',['ngRoute','ui.bootstrap','ngAnimate','jlar
         templateUrl : 'assets/views/create-team.html',
         controller:'CreateTeamController'
     })
-    .when('/add-match', {
-        templateUrl : 'assets/views/add-match.html',
-        controller:'AddMatchController'
+    .when('/schedule-match', {
+        templateUrl : 'assets/views/schedule-match.html',
+        controller:'ScheduleMatchController'
     })
     .otherwise({
         redirectTo: '/'

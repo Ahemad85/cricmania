@@ -2,7 +2,9 @@ package com.cricmania.models;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import net.vz.mongodb.jackson.DBQuery;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.modules.mongodb.jackson.MongoDB;
 
@@ -152,5 +154,10 @@ public class Player extends Modifiable {
 	
 	public static Player getPlayerById(String id) {
 		return coll.findOneById(id);
+	}
+	
+	public static List<Player> getPlayerByQuery(String q) {
+		Pattern pattern = Pattern.compile("(?i).*"+q+".*");
+		return coll.find().or(DBQuery.regex("firstName", pattern),DBQuery.regex("lastName", pattern)).toArray();
 	}
 }
